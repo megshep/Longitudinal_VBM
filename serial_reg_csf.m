@@ -1,17 +1,17 @@
 %-----------------------------------------------------------------------
 %%
-%get subbject ID from environmental variable
+%get the individual subject ID from the task ID associated with each SLURM job array (this is calculated in the MATLAB file so this needs to be defined in the associated .m file)
 SUB_ID = str2double(getenv('SLURM_ARRAY_TASK_ID'));
 
-% Add SPM to the path (CSF's SPM path)
+% Add SPM to the path (CSF's SPM path - this is where you saved it after you installed it)
 addpath('/scratch/j90161ms/spm25/spm');
 
-% Initialise SPM
-set(0,'DefaultFigureVisible','off');  % no GUI
+% This loads in SPM, initialises it and also ensures that no GUI is produced as the CSF3 is non-interactive
+set(0,'DefaultFigureVisible','off');  % no GUI code
 spm('Defaults','fMRI');
 spm_jobman('initcfg')
 
-% batch starts here
+% batch starts here, so need to define all of the inputs and include all of the paths to the files
 all_files = {
                                                '/scratch/j90161ms/000000112288.nii'
                                                '/scratch/j90161ms/000000112288_FU2.nii'
@@ -3711,14 +3711,18 @@ all_files = {
                                                '/scratch/j90161ms/000099954902_FU3.nii'
                                                };
 %%
+%%this reads in a .csv file that contains vector information for each participant (amount of time from BL --> FU2 --> FU3 in a standardised way)
 rel_times_table = readtable('/scratch/j90161ms/vector_relative_times.csv');
-    idx = (SUB_ID-1)*3 + 1;          % index for current subject
+    idx = (SUB_ID-1)*3 + 1;          % index for current subject - this is to help define the job array and identify each individual participant
     vols = all_files(idx:idx+2); % baseline, FU2, FU3
-    
+
+    %%this creates a variable as an array to load the information in the 2nd, 3rd and 4th column from this table (as this has the vector information in)
 subj_times=table2array(rel_times_table(SUB_ID, 2:4));
 
+%%this defines the model from MATLAB
     matlabbatch{1}.spm.tools.longit.series.vols      = vols;
     matlabbatch{1}.spm.tools.longit.series.times     = subj_times;
+  %%this tells MATLAB to estimate the noise in each scan, as we don't have this information. This is the default option. 
     matlabbatch{1}.spm.tools.longit.series.noise     = NaN;
     matlabbatch{1}.spm.tools.longit.series.wparam    = [0 0 100 25 100];
     matlabbatch{1}.spm.tools.longit.series.bparam    = 1000000;
