@@ -1,13 +1,15 @@
+%-----------------------------------------------------------------------
 %%
-%get subject ID from environmental variable
+%get subbject ID from environmental variable
 SUB_ID = str2double(getenv('SLURM_ARRAY_TASK_ID'));
 
 % Add SPM to the path (CSF's SPM path)
-addpath('/scratch/j90161ms/SPM12.5');
+addpath('/scratch/j90161ms/spm25/spm');
 
 % Initialise SPM
-spm('Defaults','fmri');
-spm_jobman('initcfg');
+set(0,'DefaultFigureVisible','off');  % no GUI
+spm('Defaults','fMRI');
+spm_jobman('initcfg')
 
 % batch starts here
 all_files = {
@@ -3729,7 +3731,7 @@ subj_times=table2array(rel_times_table(SUB_ID, 2:4));
 % Run all subjects
 % ======================================================================
 
-spm('defaults','FMRI');
-set(0,'DefaultFigureVisible','off');
 spm_jobman('run', matlabbatch)
+
+
 
