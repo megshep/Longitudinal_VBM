@@ -127,6 +127,7 @@ matlabbatch{1}.spm.spatial.preproc.channel.vols = {'/scratch/j90161ms/avg_000000
 '/scratch/j90161ms/avg_000008043474.nii,1'
 '/scratch/j90161ms/avg_000008337444.nii,1'
 '/scratch/j90161ms/avg_000008349556.nii,1'
+'/scratch/j90161ms/avg_000085791572.nii,1'
 '/scratch/j90161ms/avg_000008633229.nii,1'
 '/scratch/j90161ms/avg_000008685800.nii,1'
 '/scratch/j90161ms/avg_000008773013.nii,1'
