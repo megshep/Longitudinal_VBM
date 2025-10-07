@@ -1,25 +1,8 @@
-%% Get subject index from SLURM job array
-SUB_ID = str2double(getenv('SLURM_ARRAY_TASK_ID'));
-
 %% Add SPM path and initialise
 addpath('/scratch/j90161ms/spm25/spm');
 set(0,'DefaultFigureVisible','off');
 spm('Defaults','fMRI');
 spm_jobman('initcfg');
-
-%% Automatically find all avg_*.nii files
-all_files = dir('/scratch/j90161ms/avg_*.nii');
-all_files = fullfile({all_files.folder}, {all_files.name});
-
-%% Sort to ensure consistent order
-all_files = sort(all_files);
-
-%% Select the file corresponding to this SLURM array index
-this_file = all_files{SUB_ID};
-
-%% Define segmentation input for this file only
-matlabbatch{1}.spm.spatial.preproc.channel.vols = {this_file};
-
 
 %%
 matlabbatch{1}.spm.spatial.preproc.channel.biasreg = 0.001;
