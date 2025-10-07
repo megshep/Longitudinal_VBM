@@ -1,6 +1,6 @@
 
-%% Get SLURM array ID
-SUB_ID = str2double(getenv('SLURM_ARRAY_TASK_ID'));
+%%Get subject index from SLURM
+SUB_ID = str2double(getenv('SUB_ID'));
 
 %% Add SPM path and initialise
 addpath('/scratch/j90161ms/spm25/spm');       % Path to your SPM copy
