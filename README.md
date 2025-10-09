@@ -2,3 +2,4 @@ This includes all of the MATLAB and shell scripts required for each stage of a l
 
 1. For the serial longitudinal registration, I submitted the serial_reg_csf.m script and the submit_serial.sh
 2. For the segmentation, I submitted segment.m and segment_avg.sh
+3. For geodesic shooting (create new templates), I submitted shoot.m and submit_shoot.sh
