@@ -21,6 +21,11 @@ matlabbatch{1}.spm.util.tvol.tmax = 3;
 matlabbatch{1}.spm.util.tvol.mask = {'/mnt/iusers01/nm01/j90161ms/scratch/spm25/spm/tpm/mask_ICV.nii,1'};
 matlabbatch{1}.spm.util.tvol.outf = 'TCV';
 
+% Give each subject a unique output file name associated with their subject ID
+matlabbatch{1}.spm.util.tvol.outf = fullfile(segDir, ['TCV_' subj_name]);
+
 % Run job on spm within CSF
 spm('defaults', 'FMRI');
 spm_jobman('run', matlabbatch);
+
+
